@@ -10,7 +10,8 @@
     </parent>
     <groupId>github.muhsener01</groupId>
     <artifactId>task-manager</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
+    <packaging>pom</packaging>
     <name>task-manager</name>
     <description>task-manager</description>
     <url/>
@@ -20,6 +21,12 @@
     <developers>
         <developer/>
     </developers>
+    <modules>
+        <module>task-manager-domain</module>
+        <module>task-manager-data-access</module>
+        <module>task-manager-container</module>
+        <module>task-manager-application</module>
+    </modules>
     <scm>
         <connection/>
         <developerConnection/>
@@ -29,26 +36,46 @@
     <properties>
         <java.version>21</java.version>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+
+    <dependencies>
     </dependencies>
 
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>github.muhsener01</groupId>
+                <artifactId>task-manager-domain-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>github.muhsener01</groupId>
+                <artifactId>task-manager-domain-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>github.muhsener01</groupId>
+                <artifactId>task-manager-data-access</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>github.muhsener01</groupId>
+                <artifactId>task-manager-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+
+
+
+
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
+
+
     </build>
 
 </project>
