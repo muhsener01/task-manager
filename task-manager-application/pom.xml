@@ -22,5 +22,10 @@
             <groupId>github.muhsener01</groupId>
             <artifactId>task-manager-domain-application</artifactId>
         </dependency>
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli-spring-boot-starter</artifactId>
+            <version>4.7.6</version>
+        </dependency>
     </dependencies>
 </project>

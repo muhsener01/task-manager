@@ -6,7 +6,9 @@ import github.muhsener01.task.manager.domain.application.ports.output.TaskPresen
 import github.muhsener01.task.manager.domain.application.ports.output.TaskRepository;
 import github.muhsener01.task.manager.domain.core.entity.Task;
 import github.muhsener01.task.manager.domain.core.exception.InvalidDomainException;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CreateTaskCommandHandler extends AbstractCommandHandler {
 
     public CreateTaskCommandHandler(TaskPresenter presenter, TaskRepository repository) {

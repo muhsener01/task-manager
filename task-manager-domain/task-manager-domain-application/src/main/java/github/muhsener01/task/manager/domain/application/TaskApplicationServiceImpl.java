@@ -3,8 +3,10 @@ package github.muhsener01.task.manager.domain.application;
 import github.muhsener01.task.manager.domain.application.dto.CreateTaskCommand;
 import github.muhsener01.task.manager.domain.application.handler.CreateTaskCommandHandler;
 import github.muhsener01.task.manager.domain.application.ports.input.TaskApplicationService;
+import org.springframework.stereotype.Component;
 
 
+@Component
 public class TaskApplicationServiceImpl implements TaskApplicationService {
 
     private final CreateTaskCommandHandler createTaskCommandHandler;
