@@ -40,9 +40,9 @@ public class ValueObjectTest {
 
     @Test
     void givenTitle_whenPassNullArgument_thenThrowsIllegalArgument() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            Title.of(null);
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                Title.of(null)
+        );
 
         assertNotNull(exception);
         assertEquals("Title value cannot be null", exception.getMessage());
@@ -94,9 +94,9 @@ public class ValueObjectTest {
 
     @Test
     void givenDescription_whenPassNullArgument_thenThrowsIllegalArgumentException() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            Description.of(null);
-        });
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                Description.of(null)
+        );
 
         assertNotNull(exception);
         assertEquals("Description value cannot be null", exception.getMessage());
@@ -154,12 +154,12 @@ public class ValueObjectTest {
         String stringStatus2 = "asdas";
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-            TaskStatus.of(stringStatus)
+                TaskStatus.of(stringStatus)
         );
 
 
         IllegalArgumentException exception2 = assertThrows(IllegalArgumentException.class, () ->
-            TaskStatus.of(stringStatus2)
+                TaskStatus.of(stringStatus2)
         );
 
 

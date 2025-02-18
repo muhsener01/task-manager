@@ -1,0 +1,12 @@
+
+spring:
+  datasource:
+    url: jdbc:sqlite:${user.home}/Desktop/tasks-test.db
+    username: sa
+    password: sa
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    show-sql: true

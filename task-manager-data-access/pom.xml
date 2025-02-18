@@ -34,6 +34,9 @@
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-community-dialects</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>github.muhsener01</groupId>
+            <artifactId>task-manager-domain-application</artifactId>
+        </dependency>
     </dependencies>
 </project>
