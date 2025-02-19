@@ -5,6 +5,6 @@ import picocli.CommandLine;
 
 @Component()
 @CommandLine.Command(name = "task", mixinStandardHelpOptions = true,
-        description = "Task management commands", version = "0.1", subcommands = {AddTaskCommand.class})
+        description = "Task management commands", version = "0.1", subcommands = {AddTaskCommand.class,GetTaskCommand.class})
 public class TaskManagementCommand {
 }
