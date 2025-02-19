@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,13 +30,13 @@ public class TaskRepositoryMapDBAdapterTest {
 
     @Autowired
     TaskRepositoryMapDBAdapter adapter;
+    @Autowired
+    private TaskRepositoryMapDBAdapter taskRepositoryMapDBAdapter;
 
     @BeforeEach
-    public void setupDatabase(){
+    public void setupDatabase() {
 
     }
-
-
 
 
     @Test
@@ -98,8 +100,8 @@ public class TaskRepositoryMapDBAdapterTest {
 
         DataAccessException dataAccessException = assertThrows(DataAccessException.class, () -> adapter.save(task));
 
-        assertEquals("Duplicated Task record with ID: "+ task.getId().val() , dataAccessException.getMessage());
-        assertInstanceOf(DuplicatedRecordException.class , dataAccessException.getCause());
+        assertEquals("Duplicated Task record with ID: " + task.getId().val(), dataAccessException.getMessage());
+        assertInstanceOf(DuplicatedRecordException.class, dataAccessException.getCause());
     }
 
     @Test
@@ -119,12 +121,45 @@ public class TaskRepositoryMapDBAdapterTest {
     }
 
 
-    public Task buildAProperTask(){
-        return Task.builder()
-                .id(TaskId.of(UUID.randomUUID()))
-                .title(Title.of("test title"))
-                .description(Description.of("test description"))
-                .status(TaskStatus.DONE)
-                .build();
+    @Test
+    @Order(10)
+    void givenFiveTasksInDB_whenQueryAll_thenReturnsListOfTasksInDescendingOrderByCreatedAt() throws InterruptedException {
+        adapter.removeAll();
+
+        for (int i = 0; i < 5; i++) {
+            Task task = buildAProperTask();
+            Thread.sleep(500);
+            taskRepositoryMapDBAdapter.save(task);
+        }
+
+        List<TaskDetailsDTO> tasks = taskRepositoryMapDBAdapter.queryAll();
+        assertEquals(5, tasks.size());
+
+        for (int i = 0; i < tasks.size() - 1; i++) {
+            assertTrue(tasks.get(i).getCreatedAt().isAfter(tasks.get(i + 1).getCreatedAt()));
+        }
+    }
+
+
+    @Test
+    @Order(11)
+    void givenTenRecordsInDb_whenRemoveAll_thenRemovesAllRecords(){
+        adapter.removeAll();
+
+        for(int i = 0 ; i < 10 ; i++){
+            adapter.save(buildAProperTask() );
+        }
+
+
+        assertEquals(10 , adapter.queryAll().size());
+
+        adapter.removeAll();;
+
+        assertEquals(0 , adapter.queryAll().size());
+
+    }
+
+    public Task buildAProperTask() {
+        return Task.builder().id(TaskId.of(UUID.randomUUID())).title(Title.of("test title")).description(Description.of("test description")).status(TaskStatus.DONE).build();
     }
 }

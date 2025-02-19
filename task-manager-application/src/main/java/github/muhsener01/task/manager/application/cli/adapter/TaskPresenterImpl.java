@@ -5,10 +5,11 @@ import github.muhsener01.task.manager.domain.application.ports.output.TaskPresen
 import github.muhsener01.task.manager.domain.core.entity.Task;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class TaskPresenterImpl extends AbstractCLIPresenter implements TaskPresenter {
-
-
 
 
     @Override
@@ -21,15 +22,29 @@ public class TaskPresenterImpl extends AbstractCLIPresenter implements TaskPrese
 
     @Override
     public void presentTaskFound(TaskDetailsDTO taskDetailsDTO) {
+        printSuccessMessageAndExit(prepareTaskViewMessage(taskDetailsDTO));
+    }
+
+    @Override
+    public void presentTaskFound(List<TaskDetailsDTO> taskDetailsDTO) {
+        String output = taskDetailsDTO.stream()
+                .map(this::prepareTaskViewMessage)
+                .collect(Collectors.joining("\n------------------------------------------\n"));
+
+        printSuccessMessageAndExit(output);
+    }
+
+
+    private String prepareTaskViewMessage(TaskDetailsDTO taskDetailsDTO) {
         String template = "ID: %s%nTitle: %s%nDescription: %s%nStatus: %s%nCreated at: %s%nUpdated at: %s";
-        String formattedMessage = template.formatted(taskDetailsDTO.getId().toString(),
+        return template.formatted(taskDetailsDTO.getId().toString(),
                 taskDetailsDTO.getTitle(),
                 taskDetailsDTO.getDescription(),
                 taskDetailsDTO.getStatus(),
                 taskDetailsDTO.getCreatedAt() == null ? null : taskDetailsDTO.getCreatedAt().toString(),
                 taskDetailsDTO.getUpdatedAt() == null ? null : taskDetailsDTO.getUpdatedAt().toString());
 
-        printSuccessMessageAndExit(formattedMessage);
+
     }
 
 

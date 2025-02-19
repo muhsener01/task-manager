@@ -4,6 +4,8 @@ import github.muhsener01.task.manager.domain.application.dto.TaskDetailsDTO;
 import github.muhsener01.task.manager.domain.core.entity.Task;
 import github.muhsener01.task.manager.domain.core.exception.InvalidDomainException;
 
+import java.util.List;
+
 public interface TaskPresenter  extends ErrorHandlingOutputPort{
 
 
@@ -13,4 +15,5 @@ public interface TaskPresenter  extends ErrorHandlingOutputPort{
 
 
     void presentTaskFound(TaskDetailsDTO taskDetailsDTO);
+    void presentTaskFound(List<TaskDetailsDTO> taskDetailsDTO);
 }

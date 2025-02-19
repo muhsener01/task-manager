@@ -10,4 +10,6 @@ public interface TaskApplicationService {
     void createTask(CreateTaskCommand command);
 
     void getById(UUID id);
+
+    void getAll();
 }

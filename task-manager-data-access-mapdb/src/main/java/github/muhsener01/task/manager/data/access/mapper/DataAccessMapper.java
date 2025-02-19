@@ -11,6 +11,7 @@ import github.muhsener01.task.manager.domain.core.valueobject.TaskStatus;
 import github.muhsener01.task.manager.domain.core.valueobject.Title;
 
 import java.lang.reflect.Proxy;
+import java.util.List;
 
 public class DataAccessMapper {
 
@@ -40,5 +41,9 @@ public class DataAccessMapper {
     public static TaskDetailsDTO toDetailsDTO(TaskEntity taskEntity) {
         return new TaskDetails(taskEntity.getId(), taskEntity.getTitle(), taskEntity.getDescription(),
                 taskEntity.getStatus(), taskEntity.getCreatedAt(), taskEntity.getUpdatedAt());
+    }
+
+    public static List<TaskDetailsDTO> toDetailsDTO(List<TaskEntity> taskEntityList) {
+        return taskEntityList.stream().map(DataAccessMapper::toDetailsDTO).toList();
     }
 }
