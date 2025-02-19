@@ -10,7 +10,7 @@ import github.muhsener01.task.manager.domain.core.valueobject.Description;
 import github.muhsener01.task.manager.domain.core.valueobject.TaskId;
 import github.muhsener01.task.manager.domain.core.valueobject.TaskStatus;
 import github.muhsener01.task.manager.domain.core.valueobject.Title;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,18 +23,28 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = DaoConfig.class)
 @ActiveProfiles("local")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TaskRepositoryMapDBAdapterTest {
 
     @Autowired
     TaskRepositoryMapDBAdapter adapter;
 
+    @BeforeEach
+    public void setupDatabase(){
+
+    }
+
+
+
 
     @Test
+    @Order(1)
     void testAdapterNotNull() {
         assertNotNull(adapter);
     }
 
     @Test
+    @Order(2)
     void givenTask_whenSave_thenReturnsSavedTaskEntity() {
         Task task = buildAProperTask();
 
@@ -62,6 +72,7 @@ public class TaskRepositoryMapDBAdapterTest {
     }
 
     @Test
+    @Order(3)
     void givenNullId_whenFindById_thenThrowsDataAccessException() {
         DataAccessException ex = assertThrows(DataAccessException.class, () -> adapter.findById(null));
 
@@ -71,6 +82,7 @@ public class TaskRepositoryMapDBAdapterTest {
 
 
     @Test
+    @Order(4)
     void givenNullId_whenQueryById_thenThrowsDataAccessException() {
         DataAccessException ex = assertThrows(DataAccessException.class, () -> adapter.queryById(null));
 
@@ -79,6 +91,7 @@ public class TaskRepositoryMapDBAdapterTest {
     }
 
     @Test
+    @Order(5)
     void givenDuplicatedTask_whenSave_thenThrowsDataAccessException() {
         Task task = buildAProperTask();
         adapter.save(task);
@@ -90,6 +103,7 @@ public class TaskRepositoryMapDBAdapterTest {
     }
 
     @Test
+    @Order(6)
     void givenIdOfNonExistingTask_whenFindById_thenReturnsEmptyOptional() {
         Optional<Task> optional = adapter.findById(TaskId.of(UUID.randomUUID()));
 
@@ -97,6 +111,7 @@ public class TaskRepositoryMapDBAdapterTest {
     }
 
     @Test
+    @Order(7)
     void givenIdOfNonExistingTask_whenQueryById_thenReturnsEmptyOptional() {
         Optional<TaskDetailsDTO> optional = adapter.queryById(TaskId.of(UUID.randomUUID()));
 

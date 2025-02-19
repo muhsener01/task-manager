@@ -23,6 +23,9 @@ public class TaskPresenterImpl extends AbstractCLIPresenter implements TaskPrese
 
     @Override
     public void presentInvalidDomainError(InvalidDomainException exception) {
+
+        super.logError(exception);
+
         String errorMessageTemplate = "[%s][%s] %s";
 
 
@@ -39,7 +42,7 @@ public class TaskPresenterImpl extends AbstractCLIPresenter implements TaskPrese
 
     @Override
     public void presentError(Exception e) {
-        log.error(e.getMessage(), e);
+        super.logError(e);
         printErrorMessageAndExit(List.of("Unknown internal error"), 1);
     }
 

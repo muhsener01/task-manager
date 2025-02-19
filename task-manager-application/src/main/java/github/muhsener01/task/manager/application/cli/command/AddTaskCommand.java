@@ -2,6 +2,8 @@ package github.muhsener01.task.manager.application.cli.command;
 
 import github.muhsener01.task.manager.domain.application.dto.CreateTaskCommand;
 import github.muhsener01.task.manager.domain.application.ports.input.TaskApplicationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
@@ -9,6 +11,7 @@ import picocli.CommandLine;
 @Component
 public class AddTaskCommand implements Runnable{
 
+    private static final Logger log = LoggerFactory.getLogger(AddTaskCommand.class);
     @CommandLine.Option(names = {"-t" , "--title"} , description = "Title of the task" , required = true)
     private String title;
 
@@ -23,7 +26,9 @@ public class AddTaskCommand implements Runnable{
 
     @Override
     public void run() {
-        CreateTaskCommand command = new CreateTaskCommand(title , description);
+        log.info("[COMMAND EXECUTED]: task add --title='{}' --description='{}'", title, description);
+        CreateTaskCommand command = new CreateTaskCommand(title, description);
+
         taskApplicationService.createTask(command);
     }
 }

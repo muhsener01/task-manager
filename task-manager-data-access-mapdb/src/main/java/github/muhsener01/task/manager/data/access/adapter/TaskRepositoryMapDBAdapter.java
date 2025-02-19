@@ -49,12 +49,11 @@ public class TaskRepositoryMapDBAdapter implements TaskRepository {
 
             taskMap.put(taskToBeSaved.getId(), taskToBeSaved);
             db.commit();
-            log.info("Task inserted into db: {}",taskToBeSaved.getId());
 
             return task;
         } catch (Exception e) {
             db.rollback();
-            log.error("Error while saving Task: {}", e.getMessage());
+            log.debug("Error while saving Task: {}", e.getMessage());
             throw new DataAccessException(e.getMessage(), e);
         }
     }

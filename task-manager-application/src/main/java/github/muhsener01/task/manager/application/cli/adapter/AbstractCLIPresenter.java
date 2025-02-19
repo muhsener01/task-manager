@@ -2,7 +2,7 @@ package github.muhsener01.task.manager.application.cli.adapter;
 
 import java.util.List;
 
-public abstract class AbstractCLIPresenter {
+public abstract class AbstractCLIPresenter extends ErrorHandler {
 
     public static final  String ERROR_MESSAGE_TEMPLATE = "[ERROR]: %s";
 

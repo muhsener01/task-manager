@@ -1,12 +1,13 @@
+
+
+mapdb:
+  file: "${user.home}/.task-manager/tasks.db"
+
+#logging:
+#  level:
+#    github.muhsener01.task.manager.TaskManagerApplication: OFF
 spring:
   main:
     banner-mode: off
-
-mapdb:
-  file: "${user.home}/Desktop/tasks.db"
-
-logging:
-  level:
-    root: ERROR
 
 
