@@ -7,10 +7,10 @@
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>task-manager-application</artifactId>
+    <artifactId>task-manager-data-access-mapdb</artifactId>
     <packaging>jar</packaging>
 
-    <name>task-manager-application</name>
+    <name>task-manager-data-access-mapdb</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -19,13 +19,22 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>github.muhsener01</groupId>
             <artifactId>task-manager-domain-application</artifactId>
         </dependency>
         <dependency>
-            <groupId>info.picocli</groupId>
-            <artifactId>picocli-spring-boot-starter</artifactId>
-            <version>4.7.6</version>
+            <groupId>org.mapdb</groupId>
+            <artifactId>mapdb</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
         </dependency>
     </dependencies>
 </project>

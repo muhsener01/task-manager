@@ -22,5 +22,11 @@
             <groupId>github.muhsener01</groupId>
             <artifactId>task-manager-domain-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+
     </dependencies>
 </project>

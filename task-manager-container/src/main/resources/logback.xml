@@ -1,0 +1,26 @@
+<configuration>
+
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} [%level] %logger{36} - %msg%n"/>
+    <property name="LOG_PATH" value="${user.home}/.task-manager/logs" />
+
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/application.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/application-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 4️⃣ Logger Seviyelerini Ayarla -->
+    <logger name="github.muhsener01.task.manager" level="INFO"/>
+    <logger name="github.muhsener01.task.manager.TaskManagerApplication" level="OFF" />
+
+    <!-- 5️⃣ ROOT Logger (Global Varsayılan Log Seviyesi) -->
+    <root level="INFO">
+        <appender-ref ref="FILE"/>   <!-- Logları dosyaya yaz -->
+    </root>
+</configuration>

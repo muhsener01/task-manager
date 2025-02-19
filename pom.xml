@@ -23,9 +23,9 @@
     </developers>
     <modules>
         <module>task-manager-domain</module>
-        <module>task-manager-data-access</module>
         <module>task-manager-container</module>
         <module>task-manager-application</module>
+        <module>task-manager-data-access-mapdb</module>
     </modules>
     <scm>
         <connection/>
@@ -39,6 +39,7 @@
 
 
     <dependencies>
+
     </dependencies>
 
 
@@ -57,12 +58,12 @@
             </dependency>
             <dependency>
                 <groupId>github.muhsener01</groupId>
-                <artifactId>task-manager-data-access</artifactId>
+                <artifactId>task-manager-application</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>github.muhsener01</groupId>
-                <artifactId>task-manager-application</artifactId>
+                <artifactId>task-manager-data-access-mapdb</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
