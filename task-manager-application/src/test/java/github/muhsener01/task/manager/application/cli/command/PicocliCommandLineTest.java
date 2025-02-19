@@ -11,8 +11,10 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import picocli.CommandLine;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest(classes = {TestConfig.class})
@@ -44,9 +46,21 @@ public class PicocliCommandLineTest {
     }
 
     @Test
-    void givenMissingTitle_whenRun_thenExistsWithCode2AndNotCallsApplicationService() {
+    void givenMissingTitle_whenRun_thenExistsWithCode2AndNotCallsApplicationServiceAndOutputsMessageStartingWithMissingRequiredOption() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setErr(new PrintStream(outputStream));
+
         int exitCode = commandLine.execute("-d=falanfilan");
+        String output = outputStream.toString().trim();
+
+
+
         assertEquals(2, exitCode);
         Mockito.verify(service, Mockito.times(0)).createTask(any(CreateTaskCommand.class));
+        assertTrue(output.startsWith("Missing required option: '--title=<title>'"));
+
+        System.setErr(System.err);
     }
+
+
 }
