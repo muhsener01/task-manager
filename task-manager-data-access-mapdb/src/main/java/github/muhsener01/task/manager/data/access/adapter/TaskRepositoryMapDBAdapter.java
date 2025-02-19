@@ -3,6 +3,7 @@ package github.muhsener01.task.manager.data.access.adapter;
 
 import github.muhsener01.task.manager.data.access.entity.TaskEntity;
 import github.muhsener01.task.manager.data.access.exception.DuplicatedRecordException;
+import github.muhsener01.task.manager.data.access.exception.EntryNotFoundException;
 import github.muhsener01.task.manager.data.access.mapper.DataAccessMapper;
 import github.muhsener01.task.manager.domain.application.dto.TaskDetailsDTO;
 import github.muhsener01.task.manager.domain.application.ports.output.DataAccessException;
@@ -126,6 +127,35 @@ public class TaskRepositoryMapDBAdapter implements TaskRepository {
         } catch (Exception exception) {
             db.rollback();
             log.debug("Error while removing all tasks: {}", exception.getMessage());
+            throw new DataAccessException(exception.getMessage(), exception);
+        }
+    }
+
+    @Override
+    public Task update(Task taskToUpdate) {
+        try {
+
+            UUID key = taskToUpdate.getId().val();
+
+            TaskEntity oldEntity = taskMap.get(key);
+
+            if (oldEntity == null)
+                throw new EntryNotFoundException("No record found with provided id: " + key.toString());
+
+
+
+            TaskEntity newEntity = DataAccessMapper.toJpaEntity(taskToUpdate);
+            newEntity.setCreatedAt(oldEntity.getCreatedAt());
+            newEntity.setUpdatedAt(LocalDateTime.now());
+            taskMap.put(key, newEntity);
+
+            db.commit();
+
+            return taskToUpdate;
+
+        } catch (Exception exception) {
+            db.rollback();
+            log.debug("Error while updating task with ID '{}':  {}", taskToUpdate.getId().val(), exception.getMessage());
             throw new DataAccessException(exception.getMessage(), exception);
         }
     }

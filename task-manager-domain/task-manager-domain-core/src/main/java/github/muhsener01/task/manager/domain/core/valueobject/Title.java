@@ -50,4 +50,9 @@ public class Title {
     public int hashCode() {
         return Objects.hashCode(val);
     }
+
+    @Override
+    public String toString() {
+        return val;
+    }
 }
