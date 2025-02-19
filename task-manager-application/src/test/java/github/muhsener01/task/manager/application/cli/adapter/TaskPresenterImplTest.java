@@ -19,8 +19,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -82,6 +84,26 @@ public class TaskPresenterImplTest {
 
     }
 
+
+    @Test
+    void givenListOfTaskDetails_whenPresentTaskFound_thenOutputsTasksDetails() {
+        List<TaskDetailsDTO> dtos = new ArrayList<>();
+        for(int i = 0 ; i < 5 ; i++){
+            LocalDateTime now = LocalDateTime.now();
+            TaskDetailsDTO taskDetails = getTaskDetails(buildTask(), now, now);
+            dtos.add(taskDetails);
+        }
+
+        taskPresenter.presentTaskFound(dtos);
+
+        String output = outputStream.toString().trim();
+
+        String collect = prepareOutputMessageForFoundTasks(dtos);
+
+        assertEquals(collect , output);
+
+
+    }
 
     @Test
     void givenAnException_whenPresentError_thenOutputsUnknownInternalError() {
@@ -183,5 +205,10 @@ public class TaskPresenterImplTest {
                 taskDetailsDTO.getStatus(),
                 taskDetailsDTO.getCreatedAt() == null ? null : taskDetailsDTO.getCreatedAt().toString(),
                 taskDetailsDTO.getUpdatedAt() == null ? null : taskDetailsDTO.getUpdatedAt().toString());
+    }
+
+    private String prepareOutputMessageForFoundTasks(List<TaskDetailsDTO> dtos){
+        return dtos.stream().map(this::prepareOutputMessageForFoundTask)
+                .collect(Collectors.joining("\n------------------------------------------\n"));
     }
 }

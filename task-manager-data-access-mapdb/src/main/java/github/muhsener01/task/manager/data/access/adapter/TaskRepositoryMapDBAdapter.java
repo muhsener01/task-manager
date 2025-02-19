@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class TaskRepositoryMapDBAdapter implements TaskRepository {
@@ -65,7 +64,7 @@ public class TaskRepositoryMapDBAdapter implements TaskRepository {
 
             TaskEntity taskEntity = taskMap.get(id.val());
 
-            if(taskEntity == null)
+            if (taskEntity == null)
                 return Optional.empty();
 
             return Optional.of(DataAccessMapper.toDomainEntity(taskEntity));
@@ -82,7 +81,7 @@ public class TaskRepositoryMapDBAdapter implements TaskRepository {
 
             TaskEntity taskEntity = taskMap.get(id.val());
 
-            if(taskEntity == null)
+            if (taskEntity == null)
                 return Optional.empty();
 
             return Optional.of(DataAccessMapper.toDetailsDTO(taskEntity));
@@ -90,6 +89,44 @@ public class TaskRepositoryMapDBAdapter implements TaskRepository {
             db.rollback();
             log.error("Error when querying Task: {}", e.getMessage());
             throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public List<TaskDetailsDTO> queryAll() {
+        try {
+
+            Comparator<TaskEntity> comparator = (t1, t2) -> {
+                if (t1.getCreatedAt().isAfter(t2.getCreatedAt()))
+                    return -1;
+                else if (t1.getCreatedAt().equals(t2.getCreatedAt()))
+                    return 0;
+                else
+                    return 1;
+            };
+
+            List<TaskEntity> taskEntities = taskMap.getValues().stream().sorted(comparator).toList();
+
+            return DataAccessMapper.toDetailsDTO(taskEntities);
+
+
+        } catch (Exception e) {
+            log.debug("Error when querying all tasks: {}", e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void removeAll() {
+        try {
+
+            taskMap.clear();
+            db.commit();
+
+        } catch (Exception exception) {
+            db.rollback();
+            log.debug("Error while removing all tasks: {}", exception.getMessage());
+            throw new DataAccessException(exception.getMessage(), exception);
         }
     }
 }
