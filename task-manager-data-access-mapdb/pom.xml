@@ -3,14 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>github.muhsener01</groupId>
-        <artifactId>task-manager-domain</artifactId>
+        <artifactId>task-manager</artifactId>
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>task-manager-domain-application</artifactId>
+    <artifactId>task-manager-data-access-mapdb</artifactId>
     <packaging>jar</packaging>
 
-    <name>task-manager-domain-application</name>
+    <name>task-manager-data-access-mapdb</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -19,14 +19,22 @@
 
     <dependencies>
         <dependency>
-            <groupId>github.muhsener01</groupId>
-            <artifactId>task-manager-domain-core</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>github.muhsener01</groupId>
+            <artifactId>task-manager-domain-application</artifactId>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.mapdb</groupId>
+            <artifactId>mapdb</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
     </dependencies>
 </project>

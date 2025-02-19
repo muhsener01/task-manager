@@ -23,8 +23,6 @@ public class AddTaskCommand implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("title: " + title);
-        System.out.println("description: " + description);
         CreateTaskCommand command = new CreateTaskCommand(title , description);
         taskApplicationService.createTask(command);
     }

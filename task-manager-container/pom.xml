@@ -22,10 +22,7 @@
             <groupId>github.muhsener01</groupId>
             <artifactId>task-manager-domain-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>github.muhsener01</groupId>
-            <artifactId>task-manager-data-access</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>github.muhsener01</groupId>
             <artifactId>task-manager-domain-application</artifactId>
@@ -34,15 +31,24 @@
             <groupId>github.muhsener01</groupId>
             <artifactId>task-manager-application</artifactId>
         </dependency>
+        <dependency>
+            <groupId>github.muhsener01</groupId>
+            <artifactId>task-manager-data-access-mapdb</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
-         <plugin>
-             <groupId>org.springframework.boot</groupId>
-             <artifactId>spring-boot-maven-plugin</artifactId>
-             <version>3.4.2</version>
-         </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.4.2</version>
+
+            </plugin>
+
+
         </plugins>
     </build>
 </project>
