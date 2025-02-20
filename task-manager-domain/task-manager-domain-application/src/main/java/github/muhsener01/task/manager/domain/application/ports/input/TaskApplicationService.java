@@ -1,6 +1,7 @@
 package github.muhsener01.task.manager.domain.application.ports.input;
 
 import github.muhsener01.task.manager.domain.application.dto.CreateTaskCommand;
+import github.muhsener01.task.manager.domain.application.dto.TaskUpdateCommand;
 
 import java.util.UUID;
 
@@ -12,4 +13,6 @@ public interface TaskApplicationService {
     void getById(UUID id);
 
     void getAll();
+
+    void updateTask(TaskUpdateCommand taskUpdateCommand);
 }

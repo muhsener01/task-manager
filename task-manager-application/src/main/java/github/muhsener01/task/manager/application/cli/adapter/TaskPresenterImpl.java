@@ -34,6 +34,13 @@ public class TaskPresenterImpl extends AbstractCLIPresenter implements TaskPrese
         printSuccessMessageAndExit(output);
     }
 
+    @Override
+    public void presentTaskUpdated(Task taskToUpdate) {
+        String messageTemplate = "Task updated successfully: %s%nNew fields:%n%s";
+        String output = messageTemplate.formatted(taskToUpdate.getId().val(), prepareTaskViewMessage(taskToUpdate));
+        printSuccessMessageAndExit(output);
+    }
+
 
     private String prepareTaskViewMessage(TaskDetailsDTO taskDetailsDTO) {
         String template = "ID: %s%nTitle: %s%nDescription: %s%nStatus: %s%nCreated at: %s%nUpdated at: %s";
@@ -43,9 +50,17 @@ public class TaskPresenterImpl extends AbstractCLIPresenter implements TaskPrese
                 taskDetailsDTO.getStatus(),
                 taskDetailsDTO.getCreatedAt() == null ? null : taskDetailsDTO.getCreatedAt().toString(),
                 taskDetailsDTO.getUpdatedAt() == null ? null : taskDetailsDTO.getUpdatedAt().toString());
-
-
     }
+
+    private String prepareTaskViewMessage(Task task) {
+        String template = "ID: %s%nTitle: %s%nDescription: %s%nStatus: %s";
+        return template.formatted(task.getId().val().toString(),
+                task.getTitle().val(),
+                task.getDescription().val(),
+                task.getStatus().name()
+        );
+    }
+
 
 
 }

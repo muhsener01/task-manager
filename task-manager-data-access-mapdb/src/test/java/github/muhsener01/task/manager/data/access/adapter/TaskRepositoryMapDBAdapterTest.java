@@ -2,7 +2,6 @@ package github.muhsener01.task.manager.data.access.adapter;
 
 import github.muhsener01.task.manager.data.access.DaoConfig;
 import github.muhsener01.task.manager.data.access.exception.DuplicatedRecordException;
-import github.muhsener01.task.manager.data.access.mapper.DataAccessMapper;
 import github.muhsener01.task.manager.domain.application.dto.TaskDetailsDTO;
 import github.muhsener01.task.manager.domain.application.ports.output.DataAccessException;
 import github.muhsener01.task.manager.domain.core.entity.Task;
@@ -16,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -143,19 +141,45 @@ public class TaskRepositoryMapDBAdapterTest {
 
     @Test
     @Order(11)
-    void givenTenRecordsInDb_whenRemoveAll_thenRemovesAllRecords(){
+    void givenTenRecordsInDb_whenRemoveAll_thenRemovesAllRecords() {
         adapter.removeAll();
 
-        for(int i = 0 ; i < 10 ; i++){
-            adapter.save(buildAProperTask() );
+        for (int i = 0; i < 10; i++) {
+            adapter.save(buildAProperTask());
         }
 
 
-        assertEquals(10 , adapter.queryAll().size());
+        assertEquals(10, adapter.queryAll().size());
 
-        adapter.removeAll();;
+        adapter.removeAll();
 
-        assertEquals(0 , adapter.queryAll().size());
+
+        assertEquals(0, adapter.queryAll().size());
+
+    }
+
+    @Test
+    void givenTaskEntity_whenUpdateTask_thenUpdatesTaskAndReturnsUpdatedOne() {
+        Task task = buildAProperTask();
+
+        Task savedTask = adapter.save(task);
+
+
+        savedTask.update(Title.of("newTitle"), null, null);
+
+        adapter.update(savedTask);
+
+
+        Optional<TaskDetailsDTO> optional = adapter.queryById(savedTask.getId());
+        assertTrue(optional.isPresent());
+
+        TaskDetailsDTO updatedTaskDetails = optional.get();
+        assertEquals("newTitle" , updatedTaskDetails.getTitle());
+        assertNotNull(updatedTaskDetails.getCreatedAt());
+        assertTrue(updatedTaskDetails.getCreatedAt().isBefore(LocalDateTime.now()));
+        assertNotNull(updatedTaskDetails.getUpdatedAt());
+        assertTrue(updatedTaskDetails.getCreatedAt().isBefore(updatedTaskDetails.getUpdatedAt()));
+
 
     }
 

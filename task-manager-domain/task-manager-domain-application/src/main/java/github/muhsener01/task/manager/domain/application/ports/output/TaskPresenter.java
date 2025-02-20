@@ -16,4 +16,6 @@ public interface TaskPresenter  extends ErrorHandlingOutputPort{
 
     void presentTaskFound(TaskDetailsDTO taskDetailsDTO);
     void presentTaskFound(List<TaskDetailsDTO> taskDetailsDTO);
+
+    void presentTaskUpdated(Task taskToUpdate);
 }

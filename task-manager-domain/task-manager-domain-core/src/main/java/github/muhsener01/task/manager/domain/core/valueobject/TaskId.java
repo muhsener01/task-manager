@@ -17,5 +17,9 @@ public class TaskId extends BaseId<UUID> {
         return new TaskId(uuid);
     }
 
+    public String toString(){
+        return val().toString();
+    }
+
 
 }

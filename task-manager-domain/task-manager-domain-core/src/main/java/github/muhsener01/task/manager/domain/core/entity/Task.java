@@ -64,26 +64,38 @@ public class Task extends BaseEntity<TaskId> {
     }
 
 
-
-   public void update(Title title, Description description , TaskStatus status) throws IllegalStateException , InvalidDomainException{
-        if(title != null)
+    /**
+     * Updates {@code Task} with provided non-null {@code params} and validates
+     * according to the following rules:
+     * <ul>
+     *     <li>Title must be at most 200 chars.</li>
+     *     <li>Description must be at most 50 chars.</li>
+     * </ul>
+     *
+     * @param title       new title
+     * @param description new description
+     * @param status      new status
+     * @throws InvalidDomainException if there is violation in domain constraints.
+     */
+    public void update(Title title, Description description, TaskStatus status) throws InvalidDomainException {
+        if (title != null)
             this.title = title;
 
-        if(description != null)
+        if (description != null)
             this.description = description;
 
-        if(status != null)
+        if (status != null)
             this.status = status;
 
         validate();
 
-   }
+    }
 
 
-   public void changeStatus(TaskStatus status) throws IllegalArgumentException{
-        Assert.notNull(status , "argument status cannot be null");
+    public void changeStatus(TaskStatus status) throws IllegalArgumentException {
+        Assert.notNull(status, "argument status cannot be null");
         this.status = status;
-   }
+    }
 
     public Title getTitle() {
         return title;
@@ -98,7 +110,7 @@ public class Task extends BaseEntity<TaskId> {
     }
 
 
-    public  static TaskBuilder builder(){
+    public static TaskBuilder builder() {
         return new TaskBuilder();
     }
 
@@ -142,11 +154,12 @@ public class Task extends BaseEntity<TaskId> {
          *         <li>Description is optional, but if provided, it must be non-blank and at most 500 characters</li>
          *     </ul>
          * </ul>
+         *
          * @return A valid <code>Task</code> instance.
-         * @throws IllegalStateException If an ID is provided without a corresponding status.
+         * @throws IllegalStateException  If an ID is provided without a corresponding status.
          * @throws InvalidDomainException If any domain constraint is violated.
          */
-        public Task build()  throws IllegalStateException, InvalidDomainException{
+        public Task build() throws IllegalStateException, InvalidDomainException {
             return new Task(this);
         }
 

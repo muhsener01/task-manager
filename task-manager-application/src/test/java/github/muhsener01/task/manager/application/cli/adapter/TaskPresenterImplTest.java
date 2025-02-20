@@ -88,7 +88,7 @@ public class TaskPresenterImplTest {
     @Test
     void givenListOfTaskDetails_whenPresentTaskFound_thenOutputsTasksDetails() {
         List<TaskDetailsDTO> dtos = new ArrayList<>();
-        for(int i = 0 ; i < 5 ; i++){
+        for (int i = 0; i < 5; i++) {
             LocalDateTime now = LocalDateTime.now();
             TaskDetailsDTO taskDetails = getTaskDetails(buildTask(), now, now);
             dtos.add(taskDetails);
@@ -100,7 +100,7 @@ public class TaskPresenterImplTest {
 
         String collect = prepareOutputMessageForFoundTasks(dtos);
 
-        assertEquals(collect , output);
+        assertEquals(collect, output);
 
 
     }
@@ -197,6 +197,25 @@ public class TaskPresenterImplTest {
         };
     }
 
+
+    @Test
+    void givenTaskEntity_whenPresentUpdateTask_thenOutputsSuccessMessageWithNewFields() {
+        Task task = buildTask();
+
+        taskPresenter.presentTaskUpdated(task);
+
+        String output = outputStream.toString().trim();
+
+        String expected = ("Task updated successfully: %s%n" +
+                "New fields:%n" +
+                "%s").formatted(task.getId().val(),
+                        prepareOutputMessageFor(task.getId().val().toString()
+                        , task.getTitle().val(), task.getDescription().val(), task.getStatus().name()));
+
+        assertEquals(expected , output);
+
+    }
+
     private String prepareOutputMessageForFoundTask(TaskDetailsDTO taskDetailsDTO) {
         String template = "ID: %s%nTitle: %s%nDescription: %s%nStatus: %s%nCreated at: %s%nUpdated at: %s";
         return template.formatted(taskDetailsDTO.getId(),
@@ -207,7 +226,12 @@ public class TaskPresenterImplTest {
                 taskDetailsDTO.getUpdatedAt() == null ? null : taskDetailsDTO.getUpdatedAt().toString());
     }
 
-    private String prepareOutputMessageForFoundTasks(List<TaskDetailsDTO> dtos){
+    private String prepareOutputMessageFor(String id, String title, String description, String status) {
+        String template = "ID: %s%nTitle: %s%nDescription: %s%nStatus: %s";
+        return template.formatted(id, title, description, status);
+    }
+
+    private String prepareOutputMessageForFoundTasks(List<TaskDetailsDTO> dtos) {
         return dtos.stream().map(this::prepareOutputMessageForFoundTask)
                 .collect(Collectors.joining("\n------------------------------------------\n"));
     }

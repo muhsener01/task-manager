@@ -19,4 +19,6 @@ public interface TaskRepository {
     List<TaskDetailsDTO> queryAll();
 
     void removeAll();
+
+    Task update(Task taskToUpdate);
 }
